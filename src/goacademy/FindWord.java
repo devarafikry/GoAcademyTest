@@ -23,16 +23,18 @@ public class FindWord {
           for(int i = 0;i<caseSize;i++){
               int nSize = input.nextInt();
               int mSize = input.nextInt();
-              String[][] nm = new String[nSize][mSize];
+              String[][] mn = new String[mSize][nSize];
               
-              for(int j = 0;j<nSize;j++){
-                  for(int k = 0;k<mSize;k++){
-                      nm[j][k] = input.next();
+              for(int n = 0;n<nSize;n++){
+                  for(int m = 0;m<mSize;m++){
+                      mn[m][n] = input.next();
+                      System.out.println("["+m+"]["+n+"] :"+mn[m][n]);
                   }
-                  System.out.println();
+                  System.out.println("");
               }
-              String word = input.nextLine();
-              int countCase = solveCase(nm, word);
+              String word = input.next();
+              
+              int countCase = solveCase(mn, word);
               System.out.println("Solve diagonal :"+countCase);
           }
           
@@ -77,22 +79,30 @@ public class FindWord {
         
         StringBuilder diagonal1 = new StringBuilder("");
         for(int n = 0 ; n<nm.length;n++){
-            int iter = 0;
-            for(int m = 0 ; m<nm[0].length;m++){
-                diagonal1.append(nm[m][iter]);
-                iter++;
+            int iter = n;
+            for(int m = 0 ; m<nm[n].length;m++){
+                if(iter < nm.length){
+                    System.out.println("Bikin di : ["+iter+"]["+m+"] :"+nm[iter][m]);
+                    diagonal1.append(nm[iter][m]);
+                    iter++;
+                }
             }
         }
+        System.out.println("d1 :"+diagonal1.toString());
         count+=wordCountForwardAndReverse(diagonal1.toString(), word);
         
         StringBuilder diagonal2 = new StringBuilder("");
-        for(int n = (nm.length-1) ; n>0;n--){
-            int iter = 0;
-            for (int m = (nm[0].length-1) ; m>0 ; m--) {
-                diagonal1.append(nm[m][iter]);
-                iter++;
+        for(int n = 0 ; n<nm.length;n++){
+            int iter = n;
+            for(int m = 0 ; m<nm[n].length;m++){
+                if(iter < nm.length){
+                    System.out.println("Bikin di : ["+iter+"]["+m+"] :"+nm[iter][m]);
+                    diagonal2.append(nm[iter][m]);
+                    iter++;
+                }
             }
         }
+        System.out.println("d2 :"+diagonal2.toString());
         count+=wordCountForwardAndReverse(diagonal2.toString(), word);
         return count;
     }
